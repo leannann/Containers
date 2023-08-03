@@ -21,9 +21,13 @@ class array {
     std::copy(items.begin(), items.end(), arr);
   }
 
-  array(const array &a) { std::copy(a.arr, a.arr + N, arr); }
+  array(const array &a) {
+    for (size_type i = 0; i < a.size(); ++i) arr[i] = a.arr[i];
+  }
 
-  array(array &&a) { std::move(a.arr, a.arr + N, arr); }
+  array(array &&a) {
+    for (size_type i = 0; i < a.size(); ++i) arr[i] = std::move(a.arr[i]);
+  }
 
   ~array() = default;
 
@@ -58,7 +62,9 @@ class array {
 
   inline void swap(array &other) { std::swap_ranges(arr, arr + N, other.arr); }
 
-  inline void fill(const_reference value) { std::fill(arr, arr + N, value); }
+  inline void fill(const_reference value) {
+    for (size_t i = 0; i < N; ++i) arr[i] = value;
+  }
 
  private:
   value_type arr[N];
